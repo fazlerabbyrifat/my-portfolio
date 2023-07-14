@@ -1,16 +1,38 @@
-import React from "react";
+import React, { useRef } from "react";
 import { FaFacebook, FaGithub, FaLinkedin, FaPhoneAlt } from "react-icons/fa";
 import { HiOutlineLocationMarker, HiOutlineMail } from "react-icons/hi";
 import { Link } from "react-router-dom";
+import emailjs from '@emailjs/browser';
 
 const Contact = () => {
+  const form = useRef();
+
+  const sendEmail = (e) => {
+    e.preventDefault();
+
+    emailjs
+      .sendForm(
+        "service_aqk0xr6",
+        "template_y1bi54h",
+        form.current,
+        "1WhoAu4BGoU8pV9oe"
+      )
+      .then(
+        (result) => {
+          console.log(result.text);
+        },
+        (error) => {
+          console.log(error.text);
+        }
+      );
+  };
   return (
     <div id="contact" className="bg-gray-800 py-10 px-5 lg:px-40 font-serif">
       <h3 className="text-xl font-semibold text-center mb-10">Contact</h3>
       <div className="flex flex-col lg:flex-row gap-10">
         <div className="w-full lg:w-1/2 pr-5">
           <h4 className="text-2xl font-semibold mb-2">Send a Message</h4>
-          <form className="w-full">
+          <form ref={form} onSubmit={sendEmail} className="w-full">
             <div className="flex flex-col mb-4">
               <label htmlFor="name" className="text-white mb-2">
                 Name
@@ -18,7 +40,8 @@ const Contact = () => {
               <input
                 type="text"
                 id="name"
-                className="bg-gray-200 rounded py-2 px-3"
+                name="user_name"
+                className="bg-gray-200 text-gray-800 rounded py-2 px-3"
                 placeholder="Enter your name"
               />
             </div>
@@ -29,7 +52,8 @@ const Contact = () => {
               <input
                 type="email"
                 id="email"
-                className="bg-gray-200 rounded py-2 px-3"
+                name="user_email"
+                className="bg-gray-200 text-gray-800 rounded py-2 px-3"
                 placeholder="Enter your email"
               />
             </div>
@@ -39,14 +63,13 @@ const Contact = () => {
               </label>
               <textarea
                 id="message"
-                className="bg-gray-200 rounded py-2 px-3"
+                name="message"
+                className="bg-gray-200 text-gray-800 rounded py-2 px-3"
                 placeholder="Enter your message"
                 rows="4"
               ></textarea>
             </div>
-            <button className="btn btn-info" type="submit">
-              Send
-            </button>
+            <input type="submit" className="btn btn-info" value="send" />
           </form>
         </div>
         <div className="w-full lg:w-1/2 mt-6 lg:mt-0">
