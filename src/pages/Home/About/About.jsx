@@ -7,7 +7,7 @@ const About = () => {
     setShowContent(true);
   }, []);
   return (
-    <div className="bg-gray-800 py-10 px-5 lg:px-40 font-serif">
+    <div id="about" className="bg-gray-800 py-10 px-5 lg:px-40 font-serif">
       <h3 className="text-xl font-semibold text-center mb-5">About Me</h3>
       <p
         className={`text-xl font-medium p-5 text-justify transition-all duration-1000 transform ${
